@@ -2,10 +2,13 @@
   "name": "swagger-codegen-typescript",
   "version": "1.0.0",
   "description": "",
-  "main": "codegen.js",
+  "main": "codegen.ts",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint *.ts",
+    "lint:fix": "eslint --fix *.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +18,16 @@
     "jsonfile": "^6.1.0",
     "latest-version": "^7.0.0",
     "lodash": "^4.17.21",
+    "log4js": "^6.6.1",
     "shelljs": "^0.8.5",
     "yaml": "^2.1.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "typescript": "^4.7.4"
   }
 }

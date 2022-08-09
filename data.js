@@ -1,12 +1,14 @@
-export const configFiles = [
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sedFiles = exports.configFiles = void 0;
+exports.configFiles = [
     "Dockerfile",
     "gateway.json",
     ".gitignore",
     ".gitlab-ci.yml",
     "tsconfig.json",
 ];
-
-export const sedFiles = [
+exports.sedFiles = [
     {
         command: "sed -i 's/\"oas3-tools/\"felix-oas3-tools/g'",
         file: "package.json",
@@ -48,8 +50,8 @@ export const sedFiles = [
         file: "index.ts",
     },
     {
-        command:
-            "sed -i 's/response.writeHead(/let washswat = require(\"washswat-engine\");washswat.config.setHeader(response);response.writeHead(/g'",
+        command: "sed -i 's/response.writeHead(/let washswat = require(\"washswat-engine\");washswat.config.setHeader(response);response.writeHead(/g'",
         file: "utils/writer.ts",
     },
 ];
+//# sourceMappingURL=data.js.map
