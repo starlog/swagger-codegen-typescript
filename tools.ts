@@ -1,10 +1,12 @@
 import * as YAML from 'yaml';
 import * as fs from 'fs';
 import pkg from 'shelljs';
-import latestVersion from 'latest-version';
 import pkg2 from 'lodash';
 import * as log4js from 'log4js';
 import { sedFiles, configFiles } from './data';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pj = require('package-json');
 
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
@@ -24,7 +26,8 @@ export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
     // eslint-disable-next-line no-restricted-syntax
     for (const element of keyList) {
       // eslint-disable-next-line no-await-in-loop
-      myPackageJSON.dependencies[element] = `^${await latestVersion(element)}`;
+      const { version } = await pj(element);
+      myPackageJSON.dependencies[element] = `^${version}`;
     }
     return myPackageJSON;
   } catch (ex) {

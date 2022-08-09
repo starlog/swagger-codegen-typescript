@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simple wrapper for swagger codegen",
   "main": "codegen.ts",
-  "type": "module",
+  "type": "CommonJS",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint *.ts",
@@ -20,7 +20,8 @@
     "lodash": "^4.17.21",
     "log4js": "^6.6.1",
     "shelljs": "^0.8.5",
-    "yaml": "^2.1.1"
+    "yaml": "^2.1.1",
+    "package-json": "7.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.33.0",

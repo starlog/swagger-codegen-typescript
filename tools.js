@@ -39,10 +39,11 @@ exports.asyncUpdatingLatestVersionOfNpms = exports.updatingGatewayJson = exports
 const YAML = __importStar(require("yaml"));
 const fs = __importStar(require("fs"));
 const shelljs_1 = __importDefault(require("shelljs"));
-const latest_version_1 = __importDefault(require("latest-version"));
 const lodash_1 = __importDefault(require("lodash"));
 const log4js = __importStar(require("log4js"));
 const data_1 = require("./data");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pj = require('package-json');
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
 const { exec, cp, rm, find, mv, env, } = shelljs_1.default;
@@ -55,7 +56,8 @@ function getLatestNPMVersions(packageJSON) {
             // eslint-disable-next-line no-restricted-syntax
             for (const element of keyList) {
                 // eslint-disable-next-line no-await-in-loop
-                myPackageJSON.dependencies[element] = `^${yield (0, latest_version_1.default)(element)}`;
+                const { version } = yield pj(element);
+                myPackageJSON.dependencies[element] = `^${version}`;
             }
             return myPackageJSON;
         }
