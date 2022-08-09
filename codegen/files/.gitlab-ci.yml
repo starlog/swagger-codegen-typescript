@@ -1,0 +1,53 @@
+stages:
+  - build
+  - canary
+  - deploy
+
+variables:
+  CPU_ARCH: 'ARM64'
+  CONTAINER_CPU: '1024'
+  CONTAINER_MEMORY: '2048'
+  TASK_MIN_COUNT: '2'
+  TASK_MAX_COUNT: '10'
+  CONTAINER_PORT: '3000'
+  HEALTH_CHECK: '/health-check'
+  AUTO_SCALING: 'yes'
+
+build:
+  stage: build
+  only:
+    - prod
+    - stage
+    - devel
+  script:
+    - /opt/bin/docker-build.py
+
+deploy-prod:
+  stage: deploy
+  script:
+    - /opt/bin/ecs-service.py
+  only:
+    - prod
+  when: manual
+
+deploy-canary:
+  stage: canary
+  script:
+    - /opt/bin/ecs-service.py
+  only:
+    - prod
+  when: manual
+
+deploy-stage:
+  stage: deploy
+  script:
+    - /opt/bin/ecs-service.py
+  only:
+    - stage
+
+deploy-devel:
+  stage: deploy
+  script:
+    - /opt/bin/ecs-service.py
+  only:
+    - devel

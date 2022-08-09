@@ -1,0 +1,21 @@
+{
+  "name": "swagger-codegen-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "codegen.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^9.4.0",
+    "jsonfile": "^6.1.0",
+    "latest-version": "^7.0.0",
+    "lodash": "^4.17.21",
+    "shelljs": "^0.8.5",
+    "yaml": "^2.1.1"
+  }
+}

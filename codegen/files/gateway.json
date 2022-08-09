@@ -1,0 +1,6 @@
+{
+  "type": "external",
+  "paths": ["/configuration/v1/ui"],
+  "methods": ["GET"],
+  "regex_priority": 2
+}
