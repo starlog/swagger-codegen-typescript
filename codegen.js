@@ -31,40 +31,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = require("commander");
-const YAML = __importStar(require("yaml"));
-const fs = __importStar(require("fs"));
-const shelljs_1 = __importDefault(require("shelljs"));
-const latest_version_1 = __importDefault(require("latest-version"));
-const lodash_1 = __importDefault(require("lodash"));
 const log4js = __importStar(require("log4js"));
-const data_1 = require("./data");
+const tools_1 = require("./tools");
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
 const program = new commander_1.Command();
-const { exec, cp, rm, find, mv, env, } = shelljs_1.default;
-const { cloneDeep } = lodash_1.default;
-function getLatestNPMVersions(packageJSON) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const myPackageJSON = cloneDeep(packageJSON);
-        try {
-            const keyList = Object.keys(myPackageJSON.dependencies);
-            // eslint-disable-next-line no-restricted-syntax
-            for (const element of keyList) {
-                // eslint-disable-next-line no-await-in-loop
-                myPackageJSON.dependencies[element] = `^${yield (0, latest_version_1.default)(element)}`;
-            }
-            return myPackageJSON;
-        }
-        catch (ex) {
-            return ex;
-        }
-    });
-}
 program
     .command('gen')
     .description('Generate node.js code from swagger specification')
@@ -72,76 +45,22 @@ program
     .argument('<destination>', 'Generate target location')
     .action((fileName, destination) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        /// ////////////////////////////////////////////////////////////////////////////////////
         logger.debug('Generating basic swagger-based project');
-        if (exec(`java -jar $CODEGEN/codegen/swagger-codegen-cli.jar generate -i ${fileName} -l nodejs-server -o ${destination}`).code !== 0) {
-            logger.error('Codegen error');
-            process.exit(-1);
-        }
-        /// ////////////////////////////////////////////////////////////////////////////////////
+        (0, tools_1.generateCode)(fileName, destination);
         logger.debug('Copying config files..');
-        const sourcePath = `${env.CODEGEN}/codegen/files`;
-        data_1.configFiles.forEach((element) => {
-            if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
-                logger.error(`Copy error of ${element}`);
-                process.exit(-1);
-            }
-        });
-        /// ////////////////////////////////////////////////////////////////////////////////////
+        (0, tools_1.copyBasicConfigFiles)(destination);
         logger.debug('Remove node_modules just in case.');
-        rm('-rf', `${destination}/node_modules`);
-        /// ////////////////////////////////////////////////////////////////////////////////////
+        (0, tools_1.removeNodeModules)(destination);
         logger.debug('Rename all .js to .ts');
-        const fileList = find(destination).filter((file) => file.match(/\.js$/));
-        fileList.forEach((element) => {
-            mv(element, element.replace(/.js$/, '.ts'));
-        });
-        /// ////////////////////////////////////////////////////////////////////////////////////
+        (0, tools_1.renameJs2Ts)(destination);
         logger.debug('Fix various code segments.');
-        data_1.sedFiles.forEach((element) => {
-            // logger.debug(element);
-            exec(`${element.command} ${destination}/${element.file}`);
-        });
-        const fileList2 = find(`${destination}/service`).filter((file) => file.match(/\.ts$/));
-        fileList2.forEach((element) => {
-            exec(`sed -i 's/ resolve();/ resolve(null);/g' ${element}`);
-        });
-        /// ////////////////////////////////////////////////////////////////////////////////////
+        (0, tools_1.fixVariousCodeSegment)(destination);
         logger.debug('Add washswat-engine.');
-        exec(`jq '.dependencies |= . + {"washswat-engine" : "^0.0.5"}' ${destination}/package.json > ${destination}/xx.json`);
-        rm(`${destination}/package.json`);
-        mv(`${destination}/xx.json`, `${destination}/package.json`);
-        /// ////////////////////////////////////////////////////////////////////////////////////
+        (0, tools_1.addWashswatEngine)(destination);
         logger.debug('Updating gateway.json');
-        const file = fs.readFileSync(`${destination}/api/openapi.yaml`, 'utf8');
-        const result = YAML.parse(file);
-        const pathList = [];
-        const methodList = [];
-        Object.keys(result.paths).forEach((element) => {
-            if (element !== '/health-check') {
-                pathList.push(element);
-                Object.keys(result.paths[element]).forEach((subElement) => {
-                    if (!methodList.includes(subElement)) {
-                        methodList.push(subElement);
-                    }
-                });
-            }
-        });
-        const outputData = {
-            type: 'external',
-            paths: pathList,
-            methods: methodList,
-            regex_priority: 2,
-        };
-        const outString = JSON.stringify(outputData, null, 2);
-        fs.writeFileSync(`${destination}/gateway.json`, outString);
-        /// ////////////////////////////////////////////////////////////////////////////////////
+        (0, tools_1.updatingGatewayJson)(destination);
         logger.debug('Updating npm versions to latest');
-        const targetData = fs.readFileSync(`${destination}/package.json`, 'utf8');
-        const targetJson = JSON.parse(targetData);
-        const solvedTargetJSON = yield getLatestNPMVersions(targetJson);
-        const targetFileContent = JSON.stringify(solvedTargetJSON, null, 2);
-        fs.writeFileSync(`${destination}/package.json`, targetFileContent);
+        yield (0, tools_1.asyncUpdatingLatestVersionOfNpms)(destination);
     }
     catch (ex) {
         logger.debug(`Error during operation:${ex}`);

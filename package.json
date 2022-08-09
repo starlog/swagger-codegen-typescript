@@ -1,7 +1,7 @@
 {
   "name": "swagger-codegen-typescript",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple wrapper for swagger codegen",
   "main": "codegen.ts",
   "type": "module",
   "scripts": {
