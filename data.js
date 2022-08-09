@@ -26,6 +26,10 @@ exports.sedFiles = [
         file: 'index.ts',
     },
     {
+        command: "sed -i 's/8080/3000/g'",
+        file: 'README.md',
+    },
+    {
         command: "sed -i 's/var/let/g'",
         file: 'index.ts',
     },
