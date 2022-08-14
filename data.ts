@@ -53,7 +53,7 @@ export const sedFiles = [
   },
   {
     command:
-            "sed -i 's/response.writeHead(/let washswat = require(\"washswat-engine\");washswat.config.setHeader(response);response.writeHead(/g'",
+            "sed -i 's/response.writeHead(/let config = require(\"washswat-engine/lib/config\");config.setHeader(response);response.writeHead(/g'",
     file: 'utils/writer.ts',
   },
 ];

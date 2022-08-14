@@ -54,7 +54,7 @@ exports.sedFiles = [
         file: 'index.ts',
     },
     {
-        command: "sed -i 's/response.writeHead(/let washswat = require(\"washswat-engine\");washswat.config.setHeader(response);response.writeHead(/g'",
+        command: "sed -i 's/response.writeHead(/let config = require(\"washswat-engine/lib/config\");config.setHeader(response);response.writeHead(/g'",
         file: 'utils/writer.ts',
     },
 ];
