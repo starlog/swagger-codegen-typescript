@@ -17,6 +17,8 @@
     "rules": {
     },
     "ignorePatterns": [
-        "codegen/***"
+        "codegen/*",
+        "codegen/utils/*",
+        "codegen/__tests__/*"
     ]
 }
