@@ -24,5 +24,8 @@
     "import/resolver": {
       "typescript": {}
     }
-  }
+  },
+  "ignorePatterns": [
+    "controllers/*"
+  ]
 }
