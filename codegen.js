@@ -47,20 +47,29 @@ program
     try {
         logger.debug('Generating basic swagger-based project');
         (0, tools_1.generateCode)(fileName, destination);
-        logger.debug('Copying config files..');
-        (0, tools_1.copyBasicConfigFiles)(destination);
         logger.debug('Remove node_modules just in case.');
         (0, tools_1.removeNodeModules)(destination);
         logger.debug('Rename all .js to .ts');
         (0, tools_1.renameJs2Ts)(destination);
+        logger.debug('Copying config files..');
+        (0, tools_1.copyBasicConfigFiles)(destination);
+        logger.debug('Copying writer.ts..');
+        (0, tools_1.copyWriterTs)(destination);
         logger.debug('Fix various code segments.');
         (0, tools_1.fixVariousCodeSegment)(destination);
-        logger.debug('Add washswat-engine.');
-        (0, tools_1.addWashswatEngine)(destination);
+        logger.debug('Change code style');
+        (0, tools_1.processCodes)(`${destination}/service`);
+        // processCodes(`${destination}/controllers`);
+        logger.debug('Copy default test');
+        (0, tools_1.generateDefaultTest)(destination);
         logger.debug('Updating gateway.json');
         (0, tools_1.updatingGatewayJson)(destination);
         logger.debug('Updating npm versions to latest');
         yield (0, tools_1.asyncUpdatingLatestVersionOfNpms)(destination);
+        logger.debug('Installing npms');
+        (0, tools_1.installNpm)(destination);
+        logger.debug('cleanup server/*.ts using lint');
+        (0, tools_1.fixUsingLint)(destination);
     }
     catch (ex) {
         logger.debug(`Error during operation:${ex}`);

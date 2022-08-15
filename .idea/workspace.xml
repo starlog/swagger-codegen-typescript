@@ -5,8 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fb4648b-cd00-4f02-bb54-63450f5f13a1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/codegen/files/.eslintrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codegen/files/__tests__/Default.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codegen/files/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codegen/files/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codegen/files/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codegen/files/utils/writer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen.js" beforeDir="false" afterPath="$PROJECT_DIR$/codegen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/codegen.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/codegen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/files/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/codegen/files/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/data.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/data.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools.js" beforeDir="false" afterPath="$PROJECT_DIR$/tools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/tools.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,25 +49,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/felix/src/swagger-codegen-typescript&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;/home/felix/src/swagger-codegen-typescript/node_modules/eslint&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/felix/src/swagger-codegen-typescript/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "js.linters.configure.manually.selectedeslint": "true",
+    "last_opened_file_path": "/home/felix/src/swagger-codegen-typescript/codegen/files/utils",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "/home/felix/src/swagger-codegen-typescript/node_modules/eslint",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
+    "ts.external.directory.path": "/home/felix/src/swagger-codegen-typescript/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/codegen/files/utils" />
+      <recent name="$PROJECT_DIR$/codegen/files" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -62,7 +86,8 @@
       <workItem from="1660035741999" duration="594000" />
       <workItem from="1660370345340" duration="645000" />
       <workItem from="1660447510956" duration="399000" />
-      <workItem from="1660447961041" duration="129000" />
+      <workItem from="1660447961041" duration="254000" />
+      <workItem from="1660540189646" duration="7708000" />
     </task>
     <task id="LOCAL-00001" summary="Make it as typescript-lint">
       <created>1660016964165</created>
@@ -84,6 +109,12 @@
         <option value="$PROJECT_DIR$/codegen.js" />
         <option value="$PROJECT_DIR$/tools.js" />
         <option value="$PROJECT_DIR$/tools.js.map" />
+        <option value="$PROJECT_DIR$/codegen/files/__tests__/Default.test.js.map" />
+        <option value="$PROJECT_DIR$/codegen/files/__tests__/Default.test.js" />
+        <option value="$PROJECT_DIR$/codegen/files/__tests__/Default.test.js.map" />
+        <option value="$PROJECT_DIR$/codegen/files/__tests__/Default.test.js" />
+        <option value="$PROJECT_DIR$/codegen/files/index.js" />
+        <option value="$PROJECT_DIR$/codegen/files/index.js.map" />
       </list>
     </option>
   </component>

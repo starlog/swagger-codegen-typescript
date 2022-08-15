@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.asyncUpdatingLatestVersionOfNpms = exports.updatingGatewayJson = exports.addWashswatEngine = exports.fixVariousCodeSegment = exports.renameJs2Ts = exports.removeNodeModules = exports.copyBasicConfigFiles = exports.generateCode = exports.getLatestNPMVersions = void 0;
+exports.asyncUpdatingLatestVersionOfNpms = exports.updatingGatewayJson = exports.fixVariousCodeSegment = exports.copyWriterTs = exports.generateDefaultTest = exports.processCodes = exports.renameJs2Ts = exports.removeNodeModules = exports.copyBasicConfigFiles = exports.generateCode = exports.fixUsingLint = exports.installNpm = exports.getLatestNPMVersions = void 0;
 const YAML = __importStar(require("yaml"));
 const fs = __importStar(require("fs"));
 const shelljs_1 = __importDefault(require("shelljs"));
@@ -46,7 +46,7 @@ const data_1 = require("./data");
 const pj = require('package-json');
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
-const { exec, cp, rm, find, mv, env, } = shelljs_1.default;
+const { exec, cp, rm, find, mv, env, sed, cd, } = shelljs_1.default;
 const { cloneDeep } = lodash_1.default;
 function getLatestNPMVersions(packageJSON) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -59,6 +59,13 @@ function getLatestNPMVersions(packageJSON) {
                 const { version } = yield pj(element);
                 myPackageJSON.dependencies[element] = `^${version}`;
             }
+            const keyList2 = Object.keys(myPackageJSON.devDependencies);
+            // eslint-disable-next-line no-restricted-syntax
+            for (const element of keyList2) {
+                // eslint-disable-next-line no-await-in-loop
+                const { version } = yield pj(element);
+                myPackageJSON.devDependencies[element] = `^${version}`;
+            }
             return myPackageJSON;
         }
         catch (ex) {
@@ -67,6 +74,16 @@ function getLatestNPMVersions(packageJSON) {
     });
 }
 exports.getLatestNPMVersions = getLatestNPMVersions;
+function installNpm(destination) {
+    cd(destination);
+    exec('npm install');
+}
+exports.installNpm = installNpm;
+function fixUsingLint(destination) {
+    cd(destination);
+    exec('npx eslint --fix service/* > /dev/null');
+}
+exports.fixUsingLint = fixUsingLint;
 function generateCode(fileName, destination) {
     if (exec(`java -jar $CODEGEN/codegen/swagger-codegen-cli.jar generate -i ${fileName} -l nodejs-server -o ${destination}`).code !== 0) {
         logger.error('Codegen error');
@@ -95,6 +112,31 @@ function renameJs2Ts(destination) {
     });
 }
 exports.renameJs2Ts = renameJs2Ts;
+function processCodes(destination) {
+    const fileList = find(destination).filter((file) => file.match(/\.ts$/));
+    fileList.forEach((element) => {
+        exec(`sed -i 's/= function//g' ${element}`);
+        exec(`sed -i 's/exports./export async function /g' ${element}`);
+        sed('-i', "'use strict';", '', element);
+        sed('-i', '(\\s+([a-zA-Z]+\\s+)+)Promise\\(function\\(resolve, reject\\) \\{', '', element);
+        sed('-i', '  \\}\\);', '', element);
+        sed('-i', 'resolve\\(', 'return(', element);
+    });
+}
+exports.processCodes = processCodes;
+function generateDefaultTest(destination) {
+    exec(`mkdir ${destination}/__tests__`);
+    const src = `${env.CODEGEN}/codegen/files/__tests__/Default.test.ts`;
+    const dest = `${destination}/__tests__/Default.test.ts`;
+    cp(src, dest);
+}
+exports.generateDefaultTest = generateDefaultTest;
+function copyWriterTs(destination) {
+    const src = `${env.CODEGEN}/codegen/files/utils/writer.ts`;
+    const dest = `${destination}/utils/writer.ts`;
+    cp(src, dest);
+}
+exports.copyWriterTs = copyWriterTs;
 function fixVariousCodeSegment(destination) {
     data_1.sedFiles.forEach((element) => {
         // logger.debug(element);
@@ -106,12 +148,6 @@ function fixVariousCodeSegment(destination) {
     });
 }
 exports.fixVariousCodeSegment = fixVariousCodeSegment;
-function addWashswatEngine(destination) {
-    exec(`jq '.dependencies |= . + {"washswat-engine" : "^0.0.5"}' ${destination}/package.json > ${destination}/xx.json`);
-    rm(`${destination}/package.json`);
-    mv(`${destination}/xx.json`, `${destination}/package.json`);
-}
-exports.addWashswatEngine = addWashswatEngine;
 function updatingGatewayJson(destination) {
     const file = fs.readFileSync(`${destination}/api/openapi.yaml`, 'utf8');
     const result = YAML.parse(file);

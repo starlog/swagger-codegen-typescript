@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint *.ts",
     "lint:fix": "eslint --fix *.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

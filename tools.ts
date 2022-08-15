@@ -11,12 +11,13 @@ const pj = require('package-json');
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
 const {
-  exec, cp, rm, find, mv, env,
+  exec, cp, rm, find, mv, env, sed, cd,
 } = pkg;
 const { cloneDeep } = pkg2;
 
 export interface PackageJsonI {
   dependencies: object;
+  devDependencies: object;
 }
 
 export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
@@ -29,10 +30,29 @@ export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
       const { version } = await pj(element);
       myPackageJSON.dependencies[element] = `^${version}`;
     }
+
+    const keyList2 = Object.keys(myPackageJSON.devDependencies);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const element of keyList2) {
+      // eslint-disable-next-line no-await-in-loop
+      const { version } = await pj(element);
+      myPackageJSON.devDependencies[element] = `^${version}`;
+    }
+
     return myPackageJSON;
   } catch (ex) {
     return ex;
   }
+}
+
+export function installNpm(destination:string) {
+  cd(destination);
+  exec('npm install');
+}
+
+export function fixUsingLint(destination:string) {
+  cd(destination);
+  exec('npx eslint --fix service/* > /dev/null');
 }
 
 export function generateCode(fileName: string, destination: string) {
@@ -70,6 +90,31 @@ export function renameJs2Ts(destination) {
   });
 }
 
+export function processCodes(destination) {
+  const fileList = find(destination).filter((file) => file.match(/\.ts$/));
+  fileList.forEach((element) => {
+    exec(`sed -i 's/= function//g' ${element}`);
+    exec(`sed -i 's/exports./export async function /g' ${element}`);
+    sed('-i', "'use strict';", '', element);
+    sed('-i', '(\\s+([a-zA-Z]+\\s+)+)Promise\\(function\\(resolve, reject\\) \\{', '', element);
+    sed('-i', '  \\}\\);', '', element);
+    sed('-i', 'resolve\\(', 'return(', element);
+  });
+}
+
+export function generateDefaultTest(destination) {
+  exec(`mkdir ${destination}/__tests__`);
+  const src = `${env.CODEGEN}/codegen/files/__tests__/Default.test.ts`;
+  const dest = `${destination}/__tests__/Default.test.ts`;
+  cp(src, dest);
+}
+
+export function copyWriterTs(destination) {
+  const src = `${env.CODEGEN}/codegen/files/utils/writer.ts`;
+  const dest = `${destination}/utils/writer.ts`;
+  cp(src, dest);
+}
+
 export function fixVariousCodeSegment(destination) {
   sedFiles.forEach((element) => {
     // logger.debug(element);
@@ -79,18 +124,6 @@ export function fixVariousCodeSegment(destination) {
   fileList2.forEach((element) => {
     exec(`sed -i 's/ resolve();/ resolve(null);/g' ${element}`);
   });
-}
-
-export function addWashswatEngine(destination) {
-  exec(
-    `jq '.dependencies |= . + {"washswat-engine" : "^0.0.5"}' ${
-      destination
-    }/package.json > ${
-      destination
-    }/xx.json`,
-  );
-  rm(`${destination}/package.json`);
-  mv(`${destination}/xx.json`, `${destination}/package.json`);
 }
 
 export function updatingGatewayJson(destination) {

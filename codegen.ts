@@ -6,9 +6,8 @@ import {
   removeNodeModules,
   renameJs2Ts,
   fixVariousCodeSegment,
-  addWashswatEngine,
   updatingGatewayJson,
-  asyncUpdatingLatestVersionOfNpms,
+  asyncUpdatingLatestVersionOfNpms, processCodes, generateDefaultTest, copyWriterTs, installNpm, fixUsingLint,
 } from './tools';
 
 const logger = log4js.getLogger();
@@ -25,26 +24,39 @@ program
       logger.debug('Generating basic swagger-based project');
       generateCode(fileName, destination);
 
-      logger.debug('Copying config files..');
-      copyBasicConfigFiles(destination);
-
       logger.debug('Remove node_modules just in case.');
       removeNodeModules(destination);
 
       logger.debug('Rename all .js to .ts');
       renameJs2Ts(destination);
 
+      logger.debug('Copying config files..');
+      copyBasicConfigFiles(destination);
+
+      logger.debug('Copying writer.ts..');
+      copyWriterTs(destination);
+
       logger.debug('Fix various code segments.');
       fixVariousCodeSegment(destination);
 
-      logger.debug('Add washswat-engine.');
-      addWashswatEngine(destination);
+      logger.debug('Change code style');
+      processCodes(`${destination}/service`);
+      // processCodes(`${destination}/controllers`);
+
+      logger.debug('Copy default test');
+      generateDefaultTest(destination);
 
       logger.debug('Updating gateway.json');
       updatingGatewayJson(destination);
 
       logger.debug('Updating npm versions to latest');
       await asyncUpdatingLatestVersionOfNpms(destination);
+
+      logger.debug('Installing npms');
+      installNpm(destination);
+
+      logger.debug('cleanup server/*.ts using lint');
+      fixUsingLint(destination);
     } catch (ex) {
       logger.debug(`Error during operation:${ex}`);
     }

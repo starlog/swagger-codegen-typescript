@@ -7,6 +7,6 @@
     "esModuleInterop": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules", "codegen/**/__tests__/*", "codegen/*"
   ]
 }
