@@ -4,7 +4,13 @@ This will add jest test environment and eslint as well. All you need to do is cr
 This npm includes 'swagger-codegen-cli.jar' from https://github.com/swagger-api/swagger-codegen. If you feel 
 unsure, please download by yourself and replace with one from this npm.<br>  
 
-How to use
+How to install<br>
+
+~~~
+sudo npm install -global swagger-codegen-typescript
+~~~
+
+How to use<br>
 
 1. set CODEGEN environment variable to installed path. <br>
    example:<br>
