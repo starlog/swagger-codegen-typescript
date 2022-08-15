@@ -24,6 +24,7 @@ export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
   const myPackageJSON: PackageJsonI = cloneDeep(packageJSON);
   try {
     const keyList = Object.keys(myPackageJSON.dependencies);
+
     // eslint-disable-next-line no-restricted-syntax
     for (const element of keyList) {
       // eslint-disable-next-line no-await-in-loop
@@ -72,6 +73,7 @@ export function generateCode(fileName: string, destination: string) {
 export function copyBasicConfigFiles(destination) {
   const sourcePath = `${env.CODEGEN}/codegen/files`;
   configFiles.forEach((element) => {
+    // logger.debug(`Copying ${sourcePath}/${element} to ${destination}`);
     if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
       logger.error(`Copy error of ${element}`);
       process.exit(-1);

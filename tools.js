@@ -94,6 +94,7 @@ exports.generateCode = generateCode;
 function copyBasicConfigFiles(destination) {
     const sourcePath = `${env.CODEGEN}/codegen/files`;
     data_1.configFiles.forEach((element) => {
+        // logger.debug(`Copying ${sourcePath}/${element} to ${destination}`);
         if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
             logger.error(`Copy error of ${element}`);
             process.exit(-1);
