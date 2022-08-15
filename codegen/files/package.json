@@ -18,7 +18,8 @@
     "connect": "^3.7.0",
     "felix-oas3-tools": "^0.1.5",
     "js-yaml": "^4.1.0",
-    "washswat-engine": "^0.1.9"
+    "washswat-engine": "^0.1.9",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",
