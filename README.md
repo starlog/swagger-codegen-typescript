@@ -11,3 +11,8 @@ node codegen gen ~/src/washswat-api-spec/specification/order/api-order-v1-ui-get
 node codegen gen (yaml file) (destination)
 ~~~
    
+Please set CODEGEN environment variable.
+For Linix, this should be
+~~~
+export CODEGEN=/usr/lib/node_modules/swagger-codegen-typescript
+~~~

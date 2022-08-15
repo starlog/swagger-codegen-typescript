@@ -13,7 +13,7 @@ import {
   generateDefaultTest,
   copyWriterTs,
   installNpm,
-  fixUsingLint,
+  fixUsingLint, getCodegenLocation,
 } from './tools';
 
 log4js.configure({
@@ -35,6 +35,12 @@ program
   .argument('<destination>', 'Generate target location')
   .action(async (fileName, destination) => {
     try {
+      const location = getCodegenLocation();
+      if (location === null || location === '' || location === undefined) {
+        logger.info('Please set CODEGEN environment variable to your swagger-codegen-typescript location.');
+        logger.info('For Linux, it is /usr/lib/node_modules/swagger-codegen-typescript');
+        process.exit(-1);
+      }
       logger.info('Generating basic swagger-based project');
       generateCode(fileName, destination);
 

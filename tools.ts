@@ -51,6 +51,10 @@ export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
   }
 }
 
+export function getCodegenLocation() {
+  return env.CODEGEN;
+}
+
 export function installNpm(destination: string) {
   cd(destination);
   exec('npm install');
@@ -76,7 +80,12 @@ export function generateCode(fileName: string, destination: string) {
 export function copyBasicConfigFiles(destination) {
   const sourcePath = `${env.CODEGEN}/codegen/files`;
   configFiles.forEach((element) => {
-    if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
+    if (element === 'gitignore') {
+      if (cp(`${sourcePath}/${element}`, `${destination}/.gitignore`).code !== 0) {
+        logger.error(`Copy error of ${element}`);
+        process.exit(-1);
+      }
+    } else if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
       logger.error(`Copy error of ${element}`);
       process.exit(-1);
     }

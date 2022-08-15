@@ -1,7 +1,7 @@
 export const configFiles = [
   'Dockerfile',
   'gateway.json',
-  '.gitignore',
+  'gitignore',
   '.gitlab-ci.yml',
   'tsconfig.json',
   '.eslintrc.json',

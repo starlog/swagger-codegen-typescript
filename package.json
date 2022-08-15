@@ -1,6 +1,6 @@
 {
   "name": "swagger-codegen-typescript",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "description": "Typescript server boilerplate generator. Created around swagger-codegen (https://github.com/swagger-api/swagger-codegen). With some additional tooling added.",
   "main": "codegen.js",
   "type": "CommonJS",
@@ -15,6 +15,25 @@
   "bin":  "./codegen.js",
     "keywords": [
     "cli","swagger","codegen"
+  ],
+  "files": [
+    "codegen.js",
+    "data.js",
+    "tools.js",
+    "package.json",
+    "package-lock.json",
+    "README.md",
+    "/codegen/swagger-codegen-cli.jar",
+    "/codegen/files/.eslintrc.json",
+    "/codegen/files/gitignore",
+    "/codegen/files/.gitlab-ci.yml",
+    "/codegen/files/Dockerfile",
+    "/codegen/files/gateway.json",
+    "/codegen/files/index.ts",
+    "/codegen/files/package.json",
+    "/codegen/files/tsconfig.json",
+    "/codegen/files/jest.config.js",
+    "/codegen/files/utils/writer.ts"
   ],
   "author": "Felix Cho",
   "license": "MIT",
