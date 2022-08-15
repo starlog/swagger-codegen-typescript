@@ -2,7 +2,7 @@
   "name": "swagger-codegen-typescript",
   "version": "1.0.1",
   "description": "A simple wrapper for swagger codegen",
-  "main": "codegen.ts",
+  "main": "codegen.js",
   "type": "CommonJS",
   "scripts": {
     "test": "jest",
@@ -10,9 +10,12 @@
     "lint:fix": "eslint --fix *.ts",
     "build": "tsc"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "bin": "./codegen.js",
+  "keywords": [
+    "cli","swagger","codegen"
+  ],
+  "author": "Felix Cho",
+  "license": "MIT",
   "dependencies": {
     "commander": "^9.4.0",
     "jsonfile": "^6.1.0",
