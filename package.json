@@ -5,11 +5,10 @@
   "main": "codegen.ts",
   "type": "CommonJS",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint *.ts",
     "lint:fix": "eslint --fix *.ts",
-    "build": "tsc",
-    "test": "jest"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +21,7 @@
     "log4js": "^6.6.1",
     "package-json": "7.0.0",
     "shelljs": "^0.8.5",
+    "shelljs.exec": "^1.1.8",
     "yaml": "^2.1.1"
   },
   "devDependencies": {

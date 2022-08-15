@@ -7,10 +7,23 @@ import {
   renameJs2Ts,
   fixVariousCodeSegment,
   updatingGatewayJson,
-  asyncUpdatingLatestVersionOfNpms, processCodes, generateDefaultTest, copyWriterTs, installNpm, fixUsingLint,
+  asyncUpdatingLatestVersionOfNpms,
+  processCodes,
+  generateDefaultTest,
+  copyWriterTs,
+  installNpm,
+  fixUsingLint,
 } from './tools';
 
-const logger = log4js.getLogger();
+log4js.configure({
+  appenders: {
+    out: { type: 'stdout', layout: { type: 'messagePassThrough' } },
+  },
+  categories: {
+    default: { appenders: ['out'], level: 'info' },
+  },
+});
+const logger = log4js.getLogger('out');
 logger.level = 'DEBUG';
 const program = new Command();
 
@@ -21,44 +34,44 @@ program
   .argument('<destination>', 'Generate target location')
   .action(async (fileName, destination) => {
     try {
-      logger.debug('Generating basic swagger-based project');
+      logger.info('Generating basic swagger-based project');
       generateCode(fileName, destination);
 
-      logger.debug('Remove node_modules just in case.');
+      logger.info('Remove node_modules just in case.');
       removeNodeModules(destination);
 
-      logger.debug('Rename all .js to .ts');
+      logger.info('Rename all .js to .ts');
       renameJs2Ts(destination);
 
-      logger.debug('Copying config files..');
+      logger.info('Copying config files..');
       copyBasicConfigFiles(destination);
 
-      logger.debug('Copying writer.ts..');
+      logger.info('Copying writer.ts..');
       copyWriterTs(destination);
 
-      logger.debug('Fix various code segments.');
+      logger.info('Fix various code segments.');
       fixVariousCodeSegment(destination);
 
-      logger.debug('Change code style');
+      logger.info('Change code style');
       processCodes(`${destination}/service`);
       // processCodes(`${destination}/controllers`);
 
-      logger.debug('Copy default test');
+      logger.info('Copy default test');
       generateDefaultTest(destination);
 
-      logger.debug('Updating gateway.json');
+      logger.info('Updating gateway.json');
       updatingGatewayJson(destination);
 
-      logger.debug('Updating npm versions to latest');
+      logger.info('Updating npm versions to latest');
       await asyncUpdatingLatestVersionOfNpms(destination);
 
-      logger.debug('Installing npms');
-      installNpm(destination);
+      logger.info('Installing npms');
+      await installNpm(destination);
 
-      logger.debug('cleanup server/*.ts using lint');
+      logger.info('cleanup server/*.ts using lint');
       fixUsingLint(destination);
     } catch (ex) {
-      logger.debug(`Error during operation:${ex}`);
+      logger.info(`Error during operation:${ex}`);
     }
   });
 

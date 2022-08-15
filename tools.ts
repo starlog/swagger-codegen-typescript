@@ -3,10 +3,8 @@ import * as fs from 'fs';
 import pkg from 'shelljs';
 import pkg2 from 'lodash';
 import * as log4js from 'log4js';
+import pj from 'package-json';
 import { sedFiles, configFiles } from './data';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const pj = require('package-json');
 
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
@@ -24,21 +22,28 @@ export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
   const myPackageJSON: PackageJsonI = cloneDeep(packageJSON);
   try {
     const keyList = Object.keys(myPackageJSON.dependencies);
+    const result = [];
+    keyList.forEach((element) => {
+      result.push(pj(element));
+    });
+    const myResult = await Promise.all(result);
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (const element of keyList) {
-      // eslint-disable-next-line no-await-in-loop
-      const { version } = await pj(element);
-      myPackageJSON.dependencies[element] = `^${version}`;
-    }
+    myPackageJSON.dependencies = {};
+    myResult.forEach((element) => {
+      myPackageJSON.dependencies[element.name] = `^${element.version}`;
+    });
 
-    const keyList2 = Object.keys(myPackageJSON.devDependencies);
-    // eslint-disable-next-line no-restricted-syntax
-    for (const element of keyList2) {
-      // eslint-disable-next-line no-await-in-loop
-      const { version } = await pj(element);
-      myPackageJSON.devDependencies[element] = `^${version}`;
-    }
+    const keyListDev = Object.keys(myPackageJSON.devDependencies);
+    const resultDev = [];
+    keyListDev.forEach((element) => {
+      resultDev.push(pj(element));
+    });
+    const myResultDev = await Promise.all(resultDev);
+
+    myPackageJSON.devDependencies = {};
+    myResultDev.forEach((element) => {
+      myPackageJSON.devDependencies[element.name] = `^${element.version}`;
+    });
 
     return myPackageJSON;
   } catch (ex) {
@@ -46,24 +51,22 @@ export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
   }
 }
 
-export function installNpm(destination:string) {
+export function installNpm(destination: string) {
   cd(destination);
   exec('npm install');
 }
 
-export function fixUsingLint(destination:string) {
+export function fixUsingLint(destination: string) {
   cd(destination);
   exec('npx eslint --fix service/* > /dev/null');
 }
 
 export function generateCode(fileName: string, destination: string) {
   if (
-    exec(
-      `java -jar $CODEGEN/codegen/swagger-codegen-cli.jar generate -i ${
-        fileName
-      } -l nodejs-server -o ${
-        destination}`,
-    ).code !== 0
+    exec(`java -jar $CODEGEN/codegen/swagger-codegen-cli.jar generate -i ${
+      fileName
+    } -l nodejs-server -o ${
+      destination}`).code !== 0
   ) {
     logger.error('Codegen error');
     process.exit(-1);
@@ -73,7 +76,6 @@ export function generateCode(fileName: string, destination: string) {
 export function copyBasicConfigFiles(destination) {
   const sourcePath = `${env.CODEGEN}/codegen/files`;
   configFiles.forEach((element) => {
-    // logger.debug(`Copying ${sourcePath}/${element} to ${destination}`);
     if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
       logger.error(`Copy error of ${element}`);
       process.exit(-1);
@@ -97,7 +99,7 @@ export function processCodes(destination) {
   fileList.forEach((element) => {
     exec(`sed -i 's/= function//g' ${element}`);
     exec(`sed -i 's/exports./export async function /g' ${element}`);
-    sed('-i', "'use strict';", '', element);
+    sed('-i', '\'use strict\';', '', element);
     sed('-i', '(\\s+([a-zA-Z]+\\s+)+)Promise\\(function\\(resolve, reject\\) \\{', '', element);
     sed('-i', '  \\}\\);', '', element);
     sed('-i', 'resolve\\(', 'return(', element);
@@ -119,7 +121,6 @@ export function copyWriterTs(destination) {
 
 export function fixVariousCodeSegment(destination) {
   sedFiles.forEach((element) => {
-    // logger.debug(element);
     exec(`${element.command} ${destination}/${element.file}`);
   });
   const fileList2 = find(`${destination}/service`).filter((file) => file.match(/\.ts$/));

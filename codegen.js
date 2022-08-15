@@ -35,7 +35,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = require("commander");
 const log4js = __importStar(require("log4js"));
 const tools_1 = require("./tools");
-const logger = log4js.getLogger();
+log4js.configure({
+    appenders: {
+        out: { type: 'stdout', layout: { type: 'messagePassThrough' } },
+    },
+    categories: {
+        default: { appenders: ['out'], level: 'info' },
+    },
+});
+const logger = log4js.getLogger('out');
 logger.level = 'DEBUG';
 const program = new commander_1.Command();
 program
@@ -45,34 +53,34 @@ program
     .argument('<destination>', 'Generate target location')
     .action((fileName, destination) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        logger.debug('Generating basic swagger-based project');
+        logger.info('Generating basic swagger-based project');
         (0, tools_1.generateCode)(fileName, destination);
-        logger.debug('Remove node_modules just in case.');
+        logger.info('Remove node_modules just in case.');
         (0, tools_1.removeNodeModules)(destination);
-        logger.debug('Rename all .js to .ts');
+        logger.info('Rename all .js to .ts');
         (0, tools_1.renameJs2Ts)(destination);
-        logger.debug('Copying config files..');
+        logger.info('Copying config files..');
         (0, tools_1.copyBasicConfigFiles)(destination);
-        logger.debug('Copying writer.ts..');
+        logger.info('Copying writer.ts..');
         (0, tools_1.copyWriterTs)(destination);
-        logger.debug('Fix various code segments.');
+        logger.info('Fix various code segments.');
         (0, tools_1.fixVariousCodeSegment)(destination);
-        logger.debug('Change code style');
+        logger.info('Change code style');
         (0, tools_1.processCodes)(`${destination}/service`);
         // processCodes(`${destination}/controllers`);
-        logger.debug('Copy default test');
+        logger.info('Copy default test');
         (0, tools_1.generateDefaultTest)(destination);
-        logger.debug('Updating gateway.json');
+        logger.info('Updating gateway.json');
         (0, tools_1.updatingGatewayJson)(destination);
-        logger.debug('Updating npm versions to latest');
+        logger.info('Updating npm versions to latest');
         yield (0, tools_1.asyncUpdatingLatestVersionOfNpms)(destination);
-        logger.debug('Installing npms');
-        (0, tools_1.installNpm)(destination);
-        logger.debug('cleanup server/*.ts using lint');
+        logger.info('Installing npms');
+        yield (0, tools_1.installNpm)(destination);
+        logger.info('cleanup server/*.ts using lint');
         (0, tools_1.fixUsingLint)(destination);
     }
     catch (ex) {
-        logger.debug(`Error during operation:${ex}`);
+        logger.info(`Error during operation:${ex}`);
     }
 }));
 program.parse();

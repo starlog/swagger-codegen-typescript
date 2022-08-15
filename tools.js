@@ -41,9 +41,8 @@ const fs = __importStar(require("fs"));
 const shelljs_1 = __importDefault(require("shelljs"));
 const lodash_1 = __importDefault(require("lodash"));
 const log4js = __importStar(require("log4js"));
+const package_json_1 = __importDefault(require("package-json"));
 const data_1 = require("./data");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const pj = require('package-json');
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
 const { exec, cp, rm, find, mv, env, sed, cd, } = shelljs_1.default;
@@ -53,19 +52,25 @@ function getLatestNPMVersions(packageJSON) {
         const myPackageJSON = cloneDeep(packageJSON);
         try {
             const keyList = Object.keys(myPackageJSON.dependencies);
-            // eslint-disable-next-line no-restricted-syntax
-            for (const element of keyList) {
-                // eslint-disable-next-line no-await-in-loop
-                const { version } = yield pj(element);
-                myPackageJSON.dependencies[element] = `^${version}`;
-            }
-            const keyList2 = Object.keys(myPackageJSON.devDependencies);
-            // eslint-disable-next-line no-restricted-syntax
-            for (const element of keyList2) {
-                // eslint-disable-next-line no-await-in-loop
-                const { version } = yield pj(element);
-                myPackageJSON.devDependencies[element] = `^${version}`;
-            }
+            const result = [];
+            keyList.forEach((element) => {
+                result.push((0, package_json_1.default)(element));
+            });
+            const myResult = yield Promise.all(result);
+            myPackageJSON.dependencies = {};
+            myResult.forEach((element) => {
+                myPackageJSON.dependencies[element.name] = `^${element.version}`;
+            });
+            const keyListDev = Object.keys(myPackageJSON.devDependencies);
+            const resultDev = [];
+            keyListDev.forEach((element) => {
+                resultDev.push((0, package_json_1.default)(element));
+            });
+            const myResultDev = yield Promise.all(resultDev);
+            myPackageJSON.devDependencies = {};
+            myResultDev.forEach((element) => {
+                myPackageJSON.devDependencies[element.name] = `^${element.version}`;
+            });
             return myPackageJSON;
         }
         catch (ex) {
@@ -94,7 +99,6 @@ exports.generateCode = generateCode;
 function copyBasicConfigFiles(destination) {
     const sourcePath = `${env.CODEGEN}/codegen/files`;
     data_1.configFiles.forEach((element) => {
-        // logger.debug(`Copying ${sourcePath}/${element} to ${destination}`);
         if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
             logger.error(`Copy error of ${element}`);
             process.exit(-1);
@@ -118,7 +122,7 @@ function processCodes(destination) {
     fileList.forEach((element) => {
         exec(`sed -i 's/= function//g' ${element}`);
         exec(`sed -i 's/exports./export async function /g' ${element}`);
-        sed('-i', "'use strict';", '', element);
+        sed('-i', '\'use strict\';', '', element);
         sed('-i', '(\\s+([a-zA-Z]+\\s+)+)Promise\\(function\\(resolve, reject\\) \\{', '', element);
         sed('-i', '  \\}\\);', '', element);
         sed('-i', 'resolve\\(', 'return(', element);
@@ -140,7 +144,6 @@ function copyWriterTs(destination) {
 exports.copyWriterTs = copyWriterTs;
 function fixVariousCodeSegment(destination) {
     data_1.sedFiles.forEach((element) => {
-        // logger.debug(element);
         exec(`${element.command} ${destination}/${element.file}`);
     });
     const fileList2 = find(`${destination}/service`).filter((file) => file.match(/\.ts$/));
