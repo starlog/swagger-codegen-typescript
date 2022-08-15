@@ -1,7 +1,7 @@
 {
   "name": "swagger-codegen-typescript",
   "version": "1.0.1",
-  "description": "A simple wrapper for swagger codegen",
+  "description": "Typescript server boilerplate generator. Created around swagger-codegen (https://github.com/swagger-api/swagger-codegen). With some additional tooling added.",
   "main": "codegen.js",
   "type": "CommonJS",
   "scripts": {
@@ -10,8 +10,10 @@
     "lint:fix": "eslint --fix *.ts",
     "build": "tsc"
   },
-  "bin": "./codegen.js",
-  "keywords": [
+  "repository": "https://github.com/starlog/swagger-codegen-typescript",
+  "homepage": "https://github.com/starlog/swagger-codegen-typescript#readme",
+  "bin":  "./codegen.js",
+    "keywords": [
     "cli","swagger","codegen"
   ],
   "author": "Felix Cho",
