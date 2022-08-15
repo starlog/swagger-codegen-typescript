@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fb4648b-cd00-4f02-bb54-63450f5f13a1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/codegen/files/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/codegen/files/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/files/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/codegen/files/.eslintrc.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
