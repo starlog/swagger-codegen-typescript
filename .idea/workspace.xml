@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5fb4648b-cd00-4f02-bb54-63450f5f13a1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codegen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/codegen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +79,7 @@
       <workItem from="1660547911045" duration="1617000" />
       <workItem from="1660550960602" duration="1206000" />
       <workItem from="1660613147729" duration="1719000" />
-      <workItem from="1660614930054" duration="419000" />
+      <workItem from="1660614930054" duration="1527000" />
     </task>
     <task id="LOCAL-00001" summary="Make it as typescript-lint">
       <created>1660016964165</created>
