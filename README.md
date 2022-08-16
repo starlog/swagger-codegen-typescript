@@ -10,15 +10,10 @@ How to install<br>
 sudo npm install -global swagger-codegen-typescript
 ~~~
 
+
 How to use<br>
 
-1. set CODEGEN environment variable to installed path. <br>
-   example:<br>
-For Linix, this should be <br>
-~~~
-export CODEGEN=/usr/lib/node_modules/swagger-codegen-typescript
-~~~
-2. run command (or set alias/shell script)<br>
+Run command (or set alias/shell script)<br>
 ~~~
 swagger-codegen-typescript ~/src/washswat-api-spec/specification/order/api-order-v1-ui-get-pickup-date-list.yaml ~/src/example
 swagger-codegen-typescript gen (yaml file) (destination)
