@@ -5,11 +5,15 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package.json /usr/src/app/
-RUN npm install
+COPY *.json ./
 
 # Bundle app source
 COPY . /usr/src/app
 
+RUN npm install
+RUN npm install --location=global typescript
+RUN npm run build
+
+
 EXPOSE 3000
-CMD [ "node", "index.js" ]
+CMD [ "node", "dist/index.js" ]

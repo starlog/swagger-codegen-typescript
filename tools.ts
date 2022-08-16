@@ -121,7 +121,7 @@ export function processCodes(destination) {
     sed('-i', '(\\s+([a-zA-Z]+\\s+)+)Promise\\(function\\(resolve, reject\\) \\{', '', element);
     sed('-i', '  \\}\\);', '', element);
     sed('-i', 'resolve\\(', 'return(', element);
-    sed('-i', 'return\\(\\)', 'return(null)', element);
+    sed('-i', 'return\\(\\)', 'return null', element);
   });
 }
 
