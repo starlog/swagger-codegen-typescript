@@ -145,7 +145,7 @@ export function fixVariousCodeSegment(destination) {
         element.command.params[0],
         element.command.params[1],
         element.command.params[2],
-        element.file,
+        `${destination}/${element.file}`,
       );
     }
   });
