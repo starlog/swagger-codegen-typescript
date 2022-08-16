@@ -18,6 +18,15 @@ export interface PackageJsonI {
   devDependencies: object;
 }
 
+let fileLocation:string = null;
+
+export function getFileLocation() {
+  return fileLocation;
+}
+export function setFileLocation(data) {
+  fileLocation = data;
+}
+
 export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
   const myPackageJSON: PackageJsonI = cloneDeep(packageJSON);
   try {
@@ -67,7 +76,7 @@ export function fixUsingLint(destination: string) {
 
 export function generateCode(fileName: string, destination: string) {
   if (
-    exec(`java -jar $CODEGEN/codegen/swagger-codegen-cli.jar generate -i ${
+    exec(`java -jar ${fileLocation}/codegen/swagger-codegen-cli.jar generate -i ${
       fileName
     } -l nodejs-server -o ${
       destination}`).code !== 0
@@ -78,7 +87,7 @@ export function generateCode(fileName: string, destination: string) {
 }
 
 export function copyBasicConfigFiles(destination) {
-  const sourcePath = `${env.CODEGEN}/codegen/files`;
+  const sourcePath = `${fileLocation}/codegen/files`;
   configFiles.forEach((element) => {
     if (element === 'gitignore') {
       if (cp(`${sourcePath}/${element}`, `${destination}/.gitignore`).code !== 0) {
@@ -118,13 +127,13 @@ export function processCodes(destination) {
 
 export function generateDefaultTest(destination) {
   mkdir(`${destination}/__tests__`);
-  const src = `${env.CODEGEN}/codegen/files/__tests__/Default.test.ts`;
+  const src = `${fileLocation}/codegen/files/__tests__/Default.test.ts`;
   const dest = `${destination}/__tests__/Default.test.ts`;
   cp(src, dest);
 }
 
 export function copyWriterTs(destination) {
-  const src = `${env.CODEGEN}/codegen/files/utils/writer.ts`;
+  const src = `${fileLocation}/codegen/files/utils/writer.ts`;
   const dest = `${destination}/utils/writer.ts`;
   cp(src, dest);
 }
