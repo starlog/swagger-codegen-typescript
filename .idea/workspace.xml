@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fb4648b-cd00-4f02-bb54-63450f5f13a1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/data.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tools.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +40,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "js.linters.configure.manually.selectedeslint": "true",
-    "last_opened_file_path": "/home/felix/src/swagger-codegen-typescript/codegen/files",
+    "last_opened_file_path": "/home/felix/src/swagger-codegen-typescript",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -46,7 +48,7 @@
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
+    "settings.editor.selected.configurable": "preferences.sourceCode.TypeScript",
     "ts.external.directory.path": "/home/felix/src/swagger-codegen-typescript/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -79,6 +81,7 @@
       <workItem from="1660540189646" duration="7708000" />
       <workItem from="1660547911045" duration="1617000" />
       <workItem from="1660550960602" duration="1206000" />
+      <workItem from="1660613147729" duration="944000" />
     </task>
     <task id="LOCAL-00001" summary="Make it as typescript-lint">
       <created>1660016964165</created>

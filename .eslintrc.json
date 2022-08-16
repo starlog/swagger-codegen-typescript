@@ -15,6 +15,9 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "import/extensions": [
+            "off"
+        ]
     },
     "ignorePatterns": [
         "codegen/*",

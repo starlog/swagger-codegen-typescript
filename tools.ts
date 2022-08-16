@@ -9,7 +9,7 @@ import { sedFiles, configFiles } from './data';
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
 const {
-  exec, cp, rm, find, mv, env, sed, cd,
+  exec, cp, rm, find, mv, env, sed, cd, mkdir,
 } = pkg;
 const { cloneDeep } = pkg2;
 
@@ -106,17 +106,18 @@ export function renameJs2Ts(destination) {
 export function processCodes(destination) {
   const fileList = find(destination).filter((file) => file.match(/\.ts$/));
   fileList.forEach((element) => {
-    exec(`sed -i 's/= function//g' ${element}`);
-    exec(`sed -i 's/exports./export async function /g' ${element}`);
+    sed('-i', '= function', '', element);
+    sed('-i', 'exports.', 'export async function ', element);
     sed('-i', '\'use strict\';', '', element);
     sed('-i', '(\\s+([a-zA-Z]+\\s+)+)Promise\\(function\\(resolve, reject\\) \\{', '', element);
     sed('-i', '  \\}\\);', '', element);
     sed('-i', 'resolve\\(', 'return(', element);
+    sed('-i', 'return\\(\\)', 'return(null)', element);
   });
 }
 
 export function generateDefaultTest(destination) {
-  exec(`mkdir ${destination}/__tests__`);
+  mkdir(`${destination}/__tests__`);
   const src = `${env.CODEGEN}/codegen/files/__tests__/Default.test.ts`;
   const dest = `${destination}/__tests__/Default.test.ts`;
   cp(src, dest);
@@ -130,11 +131,18 @@ export function copyWriterTs(destination) {
 
 export function fixVariousCodeSegment(destination) {
   sedFiles.forEach((element) => {
-    exec(`${element.command} ${destination}/${element.file}`);
+    if (element.command.type === 'sed') {
+      sed(
+        element.command.params[0],
+        element.command.params[1],
+        element.command.params[2],
+        element.file,
+      );
+    }
   });
   const fileList2 = find(`${destination}/service`).filter((file) => file.match(/\.ts$/));
   fileList2.forEach((element) => {
-    exec(`sed -i 's/ resolve();/ resolve(null);/g' ${element}`);
+    sed('-i', ' resolve();', ' resolve(null);', element);
   });
 }
 
