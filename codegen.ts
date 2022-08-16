@@ -36,10 +36,8 @@ program
   .argument('<destination>', 'Generate target location')
   .action(async (fileName, destination) => {
     try {
-      const location = getCodegenLocation();
-      if (location === null || location === '' || location === undefined) {
-        setFileLocation(__dirname);
-      }
+      logger.info(`Using source location as: ${__dirname}`);
+      setFileLocation(__dirname);
 
       logger.info('Generating basic swagger-based project');
       generateCode(fileName, destination);
