@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fb4648b-cd00-4f02-bb54-63450f5f13a1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codegen/files/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/codegen/files/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codegen/jest.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tools.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +83,7 @@
       <workItem from="1660614930054" duration="2867000" />
       <workItem from="1660635028670" duration="495000" />
       <workItem from="1660639749246" duration="623000" />
+      <workItem from="1660825312819" duration="54000" />
     </task>
     <task id="LOCAL-00001" summary="Make it as typescript-lint">
       <created>1660016964165</created>

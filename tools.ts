@@ -166,7 +166,7 @@ export function updatingGatewayJson(destination) {
       pathList.push(element);
       Object.keys(result.paths[element]).forEach((subElement) => {
         if (!methodList.includes(subElement)) {
-          methodList.push(subElement);
+          methodList.push(subElement.toUpperCase());
         }
       });
     }
