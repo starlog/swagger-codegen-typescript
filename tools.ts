@@ -167,7 +167,7 @@ export function processCodes(destination) {
     sed('-i', 'return\\(\\)', 'return null', element);
     sed('-i', '  var examples = \\{\\};', '', element);
     sed('-i', 'examples\\[\'application/json\']', 'const examples', element);
-    sed('-i', 'examples\\[Object\\.keys\\(examples\\)\\[0]]', 'examples', element);
+    sed('-i', '\\(examples\\[Object\\.keys\\(examples\\)\\[0]]\\)', ' examples', element);
   });
 }
 
