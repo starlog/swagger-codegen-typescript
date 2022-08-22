@@ -13,8 +13,8 @@ import {
   generateDefaultTest,
   copyWriterTs,
   installNpm,
-  fixUsingLint, getCodegenLocation,
-  setFileLocation,
+  fixUsingLint,
+  setFileLocation, setIndexTsAndServiceCode, setPackageName,
 } from './tools';
 
 log4js.configure({
@@ -51,21 +51,27 @@ program
       logger.info('Copying config files..');
       copyBasicConfigFiles(destination);
 
+      logger.info('Setting index.ts with correct service name');
+      setIndexTsAndServiceCode(destination);
+
       logger.info('Copying writer.ts..');
       copyWriterTs(destination);
 
       logger.info('Fix various code segments.');
       fixVariousCodeSegment(destination);
 
-      logger.info('Change code style');
-      processCodes(`${destination}/service`);
-      // processCodes(`${destination}/controllers`);
-
       logger.info('Copy default test');
       generateDefaultTest(destination);
 
       logger.info('Updating gateway.json');
       updatingGatewayJson(destination);
+
+      logger.info('Set package.json name');
+      setPackageName(fileName, destination);
+
+      logger.info('Change code style');
+      processCodes(`${destination}/service`);
+      // processCodes(`${destination}/controllers`);
 
       logger.info('Updating npm versions to latest');
       await asyncUpdatingLatestVersionOfNpms(destination);

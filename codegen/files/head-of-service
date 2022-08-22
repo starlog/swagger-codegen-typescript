@@ -1,0 +1,19 @@
+import moment from 'moment';
+import * as _ from 'lodash';
+import * as config from 'washswat-engine/lib/config';
+import * as mysql from 'washswat-engine/lib/mysql';
+import * as api from 'washswat-engine/lib/api';
+import * as mongo from 'washswat-engine/lib/mongodb';
+import * as cache from 'washswat-engine/lib/cache';
+import * as rest from 'washswat-engine/lib/httpclient';
+import * as util2 from 'washswat-engine/lib/util2';
+import * as packageJson from '../package.json';
+
+const logger = util2.getLogger('main');
+
+export async function init() {
+  logger.info('init start.');
+  await config.configure('REPLACE_WITH_DOMAIN', 'REPLACE_WITH_AP', packageJson, 'debug');
+  return true;
+}
+

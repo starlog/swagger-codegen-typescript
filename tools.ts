@@ -9,7 +9,7 @@ import { sedFiles, configFiles } from './data';
 const logger = log4js.getLogger();
 logger.level = 'DEBUG';
 const {
-  exec, cp, rm, find, mv, env, sed, cd, mkdir,
+  exec, cp, rm, find, mv, env, sed, cd, mkdir, cat,
 } = pkg;
 const { cloneDeep } = pkg2;
 
@@ -18,11 +18,54 @@ export interface PackageJsonI {
   devDependencies: object;
 }
 
-let fileLocation:string = null;
+let fileLocation: string = null;
+
+export function setPackageName(fileName, destination) {
+  const nameList = fileName.split('/');
+  const lastNameList = nameList[nameList.length - 1].split('.');
+  const lastName = lastNameList[0];
+  const elementList = lastName.split('-');
+  const domain = elementList[1];
+  let appTemp = '';
+  // eslint-disable-next-line no-plusplus
+  for (let i = 3; i < elementList.length; i++) {
+    appTemp += `${elementList[i]}-`;
+  }
+  const app = appTemp.slice(0, -1);
+
+  const list = fs.readdirSync(`${destination}/service`);
+  let targetFileName: any;
+  list.forEach((filename) => {
+    if (filename !== 'HealthCheckService.ts') {
+      targetFileName = filename.split('.');
+    }
+  });
+
+  const serviceName = `${targetFileName[0]}.ts`;
+
+  sed('-i', 'REPLACE_WITH_NAME', lastName, `${destination}/package.json`);
+  sed('-i', 'REPLACE_WITH_DOMAIN', domain, `${destination}/service/${serviceName}`);
+  sed('-i', 'REPLACE_WITH_AP', app, `${destination}/service/${serviceName}`);
+}
+
+export function setIndexTsAndServiceCode(destination) {
+  const list = fs.readdirSync(`${destination}/service`);
+  let targetFileName: any;
+  list.forEach((filename) => {
+    if (filename !== 'HealthCheckService.ts') {
+      targetFileName = filename.split('.');
+    }
+  });
+
+  const serviceName = `${targetFileName[0]}.ts`;
+  sed('-i', 'REPLACE_WITH_SERVICE', targetFileName[0], `${destination}/index.ts`);
+  cat(`${fileLocation}/codegen/files/head-of-service`).cat(`${destination}/service/${serviceName}`).to(`${destination}/service/${serviceName}`);
+}
 
 export function getFileLocation() {
   return fileLocation;
 }
+
 export function setFileLocation(data) {
   fileLocation = data;
 }
@@ -122,6 +165,9 @@ export function processCodes(destination) {
     sed('-i', '  \\}\\);', '', element);
     sed('-i', 'resolve\\(', 'return(', element);
     sed('-i', 'return\\(\\)', 'return null', element);
+    sed('-i', '  var examples = \\{\\};', '', element);
+    sed('-i', 'examples\\[\'application/json\']', 'const examples', element);
+    sed('-i', 'examples\\[Object\\.keys\\(examples\\)\\[0]]', 'examples', element);
   });
 }
 
