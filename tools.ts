@@ -94,11 +94,11 @@ export async function getLatestNPMVersions(packageJSON: PackageJsonI) {
 
     myPackageJSON.devDependencies = {};
     myResultDev.forEach((element) => {
-      if (element.name === 'jest') {
-        myPackageJSON.devDependencies[element.name] = '28.1.3';
-      } else {
-        myPackageJSON.devDependencies[element.name] = `^${element.version}`;
-      }
+      // if (element.name === 'jest') {
+      //   myPackageJSON.devDependencies[element.name] = '28.1.3';
+      // } else {
+      myPackageJSON.devDependencies[element.name] = `^${element.version}`;
+      // }
     });
 
     return myPackageJSON;
