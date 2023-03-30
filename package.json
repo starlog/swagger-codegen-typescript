@@ -1,11 +1,10 @@
 {
   "name": "swagger-codegen-typescript",
-  "version": "1.2.3",
+  "version": "1.2.7",
   "description": "Typescript server boilerplate generator. Created around swagger-codegen (https://github.com/swagger-api/swagger-codegen). With some additional tooling added.",
   "main": "codegen.js",
   "type": "CommonJS",
   "scripts": {
-    "test": "jest",
     "lint": "eslint *.ts",
     "lint:fix": "eslint --fix *.ts",
     "build": "tsc"
@@ -32,7 +31,6 @@
     "/codegen/files/index.ts",
     "/codegen/files/package.json",
     "/codegen/files/tsconfig.json",
-    "/codegen/files/jest.config.js",
     "/codegen/files/head-of-service",
     "/codegen/files/utils/writer.ts",
     "/codegen/files/__tests__/Default.test.ts"

@@ -5,7 +5,6 @@ export const configFiles = [
   '.gitlab-ci.yml',
   'tsconfig.json',
   '.eslintrc.json',
-  'jest.config.js',
   'package.json',
   'index.ts',
 ];

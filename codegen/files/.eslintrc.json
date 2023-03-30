@@ -5,8 +5,7 @@
     "es2021": true
   },
   "extends": [
-    "airbnb-base",
-    "plugin:jest/recommended"
+    "airbnb-base"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
