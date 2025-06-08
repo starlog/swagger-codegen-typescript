@@ -1,6 +1,6 @@
 {
   "name": "swagger-codegen-typescript",
-  "version": "1.2.8",
+  "version": "1.2.",
   "description": "Typescript server boilerplate generator. Created around swagger-codegen (https://github.com/swagger-api/swagger-codegen). With some additional tooling added.",
   "main": "codegen.js",
   "type": "CommonJS",
@@ -28,6 +28,7 @@
     "README.md",
     "/codegen/swagger-codegen-cli.jar",
     "/codegen/files/.eslintrc.json",
+    "/codegen/files/eslint.config.mjs",
     "/codegen/files/gitignore",
     "/codegen/files/.gitlab-ci.yml",
     "/codegen/files/Dockerfile",
