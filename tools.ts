@@ -43,6 +43,7 @@ export function setPackageName(fileName, destination) {
 
   const serviceName = `${targetFileName[0]}.ts`;
 
+  console.log(`destination: ${destination}, serviceName: ${serviceName}, lastName: ${lastName}, domain: ${domain}, app: ${app}`);
   sed('-i', 'REPLACE_WITH_NAME', lastName, `${destination}/package.json`);
   sed('-i', 'REPLACE_WITH_DOMAIN', domain, `${destination}/service/${serviceName}`);
   sed('-i', 'REPLACE_WITH_AP', app, `${destination}/service/${serviceName}`);
@@ -135,6 +136,7 @@ export function generateCode(fileName: string, destination: string) {
 
 export function copyBasicConfigFiles(destination) {
   const sourcePath = `${fileLocation}/codegen/files`;
+  console.log(`Copying config files from ${sourcePath} to ${destination}`);
   configFiles.forEach((element) => {
     if (element === 'gitignore') {
       if (cp(`${sourcePath}/${element}`, `${destination}/.gitignore`).code !== 0) {
@@ -144,6 +146,9 @@ export function copyBasicConfigFiles(destination) {
     } else if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
       logger.error(`Copy error of ${element}`);
       process.exit(-1);
+    } else 
+    {
+      logger.info(`Copied ${element} to ${destination}`);
     }
   });
 }

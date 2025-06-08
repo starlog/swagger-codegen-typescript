@@ -1,4 +1,4 @@
-import * as config from 'washswat-engine/lib/config';
+import * as config from '@felixcho/felix-engine/lib/config';
 
 export interface iResponsePayLoad {
   code: any,

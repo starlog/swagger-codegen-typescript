@@ -3,7 +3,7 @@ import * as http from 'http';
 import * as oas3Tools from 'felix-oas3-tools';
 import { Oas3AppOptions } from 'felix-oas3-tools/dist/middleware/oas3.options';
 import * as log4js from 'log4js';
-import * as init from './service/REPLACE_WITH_SERVICE';
+import * as serviceInit from './service/REPLACE_WITH_SERVICE';
 
 log4js.configure({
   appenders: { index: { type: 'stdout', style: 'basic' } },
@@ -27,7 +27,7 @@ const options: Oas3AppOptions = {
 const expressAppConfig = oas3Tools.expressAppConfig(path.join(__dirname, '../api/openapi.yaml'), options);
 const app = expressAppConfig.getApp();
 
-init.init().then(() => {
+serviceInit.init().then(() => {
 // Initialize the Swagger middleware
   http.createServer(app).listen(serverPort, () => {
     logger.info('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);

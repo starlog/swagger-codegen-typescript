@@ -7,6 +7,7 @@ export const configFiles = [
   '.eslintrc.json',
   'package.json',
   'index.ts',
+  'eslint.config.mjs',
 ];
 
 export const sedFiles = [
