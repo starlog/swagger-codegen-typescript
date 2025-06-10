@@ -1,6 +1,6 @@
 {
   "name": "swagger-codegen-typescript",
-  "version": "1.2.9",
+  "version": "1.3.0",
   "description": "Typescript server boilerplate generator. Created around swagger-codegen (https://github.com/swagger-api/swagger-codegen). With some additional tooling added.",
   "main": "codegen.js",
   "type": "CommonJS",
@@ -37,8 +37,7 @@
     "/codegen/files/package.json",
     "/codegen/files/tsconfig.json",
     "/codegen/files/head-of-service",
-    "/codegen/files/utils/writer.ts",
-    "/codegen/files/__tests__/Default.test.ts"
+    "/codegen/files/utils/writer.ts"
   ],
   "author": "Felix Cho",
   "license": "MIT",
@@ -49,20 +48,16 @@
     "lodash": "^4.17.21",
     "log4js": "^6.6.1",
     "package-json": "7.0.0",
-    "shelljs": "^0.8.5",
+    "shelljs": "^0.10.0",
     "shelljs.exec": "^1.1.8",
     "yaml": "^2.1.1"
   },
   "devDependencies": {
-    "@jest/globals": "^30.0.0-beta.3",
-    "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.21.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.3.4",
     "typescript": "^4.7.4"
   }
 }

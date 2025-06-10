@@ -31,6 +31,7 @@ export function setPackageName(fileName, destination) {
   for (let i = 3; i < elementList.length; i++) {
     appTemp += `${elementList[i]}-`;
   }
+  console.log(`appTemp: ${appTemp}`);
   const app = appTemp.slice(0, -1);
 
   const list = fs.readdirSync(`${destination}/service`);
@@ -44,8 +45,11 @@ export function setPackageName(fileName, destination) {
   const serviceName = `${targetFileName[0]}.ts`;
 
   console.log(`destination: ${destination}, serviceName: ${serviceName}, lastName: ${lastName}, domain: ${domain}, app: ${app}`);
+  console.log(`REPLACE_WITH_NAME: ${lastName}`);
   sed('-i', 'REPLACE_WITH_NAME', lastName, `${destination}/package.json`);
+  console.log(`REPLACE_WITH_SERVICE: ${domain}`);
   sed('-i', 'REPLACE_WITH_DOMAIN', domain, `${destination}/service/${serviceName}`);
+  console.log(`REPLACE_WITH_AP: ${app}`);
   sed('-i', 'REPLACE_WITH_AP', app, `${destination}/service/${serviceName}`);
 }
 
@@ -124,10 +128,8 @@ export function fixUsingLint(destination: string) {
 
 export function generateCode(fileName: string, destination: string) {
   if (
-    exec(`java -jar ${fileLocation}/codegen/swagger-codegen-cli.jar generate -i ${
-      fileName
-    } -l nodejs-server -o ${
-      destination}`).code !== 0
+    exec(`java -jar ${fileLocation}/codegen/swagger-codegen-cli.jar generate -i ${fileName
+      } -l nodejs-server -o ${destination}`).code !== 0
   ) {
     logger.error('Codegen error');
     process.exit(-1);
@@ -146,8 +148,7 @@ export function copyBasicConfigFiles(destination) {
     } else if (cp(`${sourcePath}/${element}`, destination).code !== 0) {
       logger.error(`Copy error of ${element}`);
       process.exit(-1);
-    } else 
-    {
+    } else {
       logger.info(`Copied ${element} to ${destination}`);
     }
   });

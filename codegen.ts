@@ -60,8 +60,8 @@ program
       logger.info('Fix various code segments.');
       fixVariousCodeSegment(destination);
 
-      logger.info('Copy default test');
-      generateDefaultTest(destination);
+      // logger.info('Copy default test');
+      // generateDefaultTest(destination);
 
       logger.info('Updating gateway.json');
       updatingGatewayJson(destination);

@@ -13,7 +13,7 @@ const logger = util2.getLogger('main');
 
 export async function init() {
   logger.info('init start.');
-  await config.configure('REPLACE_WITH_DOMAIN', 'REPLACE_WITH_AP', packageJson, 'debug');
+  //await config.configure('REPLACE_WITH_DOMAIN', 'REPLACE_WITH_AP', packageJson, 'debug');
   return true;
 }
 
